@@ -1,8 +1,8 @@
 {
-  "name": "electron-vue-vite",
-  "version": "0.0.1",
+  "name": "ReedNote",
+  "version": "0.0.2",
   "main": "dist/main/index.cjs",
-  "author": "草鞋没号 <308487730@qq.com>",
+  "author": "Ex10si0n",
   "license": "MIT",
   "scripts": {
     "dev": "node scripts/watch.mjs",
