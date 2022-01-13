@@ -1,6 +1,6 @@
 {
   "name": "ReedNote",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "dist/main/index.cjs",
   "author": "Ex10si0n",
   "license": "MIT",
