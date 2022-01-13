@@ -60,9 +60,21 @@ const editor = useEditor((root) =>
 </template>
 
 <style>
+
+
+.milkdown {
+  box-shadow: none;
+  height: 500px;
+}
+
 .milkdown .editor {
   max-width: none !important;
+  height: 100%;
   padding: 3% 6% !important;
+}
+
+.editor {
+  caret-color: #00b1f3;
 }
 
 .milkdown .editor p {
@@ -85,6 +97,16 @@ const editor = useEditor((root) =>
   width: 3.2cm;
   padding: 0px;
   margin: 0px;
+}
+
+.milkdown .editor a {
+  @apply text-cyan-500 dark:text-yellow-300 no-underline font-bold;
+}
+.milkdown .editor .code-inline {
+  @apply my-0 mx-1 py-0 px-1 bg-gray-200 text-black dark:bg-gray-600 dark:text-white text-center text-lg font-mono;
+}
+.milkdown .editor .code-fence {
+  @apply bg-gray-50 dark:bg-zinc-900;
 }
 
 </style>

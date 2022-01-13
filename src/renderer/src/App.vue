@@ -11,10 +11,19 @@ const editorStatus = computed(() => {
 	return store.state.status
 })
 
+const url = computed(() => {
+  return store.state.currentNote.url
+})
+
+const fileName = url.value.split('/')[url.value.split('/').length - 1]
+
 </script>
 
 <template>
-  <div class="container">
+<div class="h-10" id="title-bar">
+  <!--<div class="py-2 font-sans text-sm font-bold text-center text-gray-700" id="title">{{ fileName == '' ? "Untitled" : fileName }}</div>-->
+</div>
+  <div class="cursor-text relative min-h-screen bg-white dark:bg-[@2e3440] overflow:hidden">
     <LoadSaveVue/>
     <MilkdownEditorVue v-if="editorStatus == 'loaded' " />
   </div>
@@ -23,5 +32,10 @@ const editorStatus = computed(() => {
 <style>
 body {
   background-color: rgba(var(--background), 1);
+  background-color: white;
+}
+
+#title-bar {
+  -webkit-app-region: drag;
 }
 </style>

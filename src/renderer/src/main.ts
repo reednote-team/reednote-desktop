@@ -4,6 +4,7 @@ import store from './store'
 import prism from 'prismjs'
 import 'material-icons'
 import 'prismjs/themes/prism.css'
+import './index.css'
 
 
 prism.highlightAll()
