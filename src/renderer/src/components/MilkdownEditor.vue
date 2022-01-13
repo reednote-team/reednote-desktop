@@ -14,23 +14,23 @@ import { upload } from "@milkdown/plugin-upload"
 import { prism } from "@milkdown/plugin-prism"
 import { indent, indentPlugin } from '@milkdown/plugin-indent';
 import { listener, listenerCtx } from '@milkdown/plugin-listener';
+import { useStore } from 'vuex'
+import { computed } from 'vue'
 
-let props = defineProps<{
-  content: string,
-}>()
+const store = useStore()
 
-let emit = defineEmits<{
-  (e: 'update:content', content: string): void
-}>()
+const content = computed(() => {
+	return store.state.currentNote.content
+})
 
 const editor = useEditor((root) =>
   Editor.make()
     .config((ctx) => {
       ctx.set(rootCtx, root)
-      ctx.set(defaultValueCtx, props.content)
+      ctx.set(defaultValueCtx, content.value)
       ctx.set(listenerCtx, {
         markdown: [(get) => {
-          emit('update:content', get())
+			store.commit('updateCurrentNoteContent', get())
         }]
       });
     })

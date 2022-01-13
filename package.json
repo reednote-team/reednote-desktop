@@ -50,6 +50,7 @@
     "@milkdown/theme-nord": "^5.3.1",
     "@milkdown/vue": "^5.3.1",
     "material-icons": "^1.10.5",
-    "prismjs": "^1.26.0"
+    "prismjs": "^1.26.0",
+    "vuex": "^4.0.2"
   }
 }

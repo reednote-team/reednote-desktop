@@ -1,9 +1,14 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import store from './store'
+import prism from 'prismjs'
 import 'material-icons'
 import 'prismjs/themes/prism.css'
 
-createApp(App)
-  .mount('#app')
-  .$nextTick(window.removeLoading)
 
+prism.highlightAll()
+
+createApp(App)
+	.use(store)
+	.mount('#app')
+	.$nextTick(window.removeLoading)

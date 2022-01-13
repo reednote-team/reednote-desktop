@@ -1,6 +1,7 @@
 import os from 'os'
 import path from 'path'
-import { app, BrowserWindow, Menu } from 'electron'
+import { readFileSync } from 'fs'
+import { app, BrowserWindow, Menu, dialog } from 'electron'
 
 const isMac = process.platform === 'darwin'
 
@@ -25,7 +26,16 @@ const appMenu = [
   {
     label: 'File',
     submenu: [
-      isMac ? { role: 'close' } : { role: 'quit' },
+	  { 
+		id: "new-file",
+		enabled: true,
+		accelerator: "CmdOrCtrl+N",
+		label: "New",
+		click: async () => {
+			// @ts-ignore
+			// createWindow()
+		},
+	  },
 	  { 
 		id: "open-file",
 		enabled: true,
@@ -33,7 +43,51 @@ const appMenu = [
 		label: "Open ...",
 		click: async () => {
 			// @ts-ignore
-			win.webContents.send("open-file")
+			// win.webContents.send("open-file")
+
+			dialog.showOpenDialog(win, {
+				properties: ['openFile'],
+			}).then((result) => {
+				console.log(result.canceled);
+				const content = readFileSync(result.filePaths[0], 'utf-8')
+				// @ts-ignore
+				win.webContents.send("open-file", { 
+					content: content, 
+					filePath: result.filePaths[0]
+				})
+			}).catch(err => {
+				console.log(err)
+			})
+		},
+	  },
+	  { 
+		id: "save-copy",
+		enabled: true,
+		accelerator: "CmdOrCtrl+Shift+S",
+		label: "Save Copy to ...",
+		click: async () => {
+
+			// @ts-ignore
+			dialog.showSaveDialog(win, {
+				title: "Save Copy to ...",
+				buttonLabel: "Save",
+				filters: [
+					{ name: 'Markdown', extensions: ['md'] },
+					{ name: 'Pure Text', extensions: ['txt']},
+					{ name: 'All Files', extensions: ['*']},
+				]
+			}).then((fileName) => {
+				console.log(fileName.filePath)
+				// @ts-ignore
+				win.webContents.send("save-copy", { 
+					filePath: fileName.filePath
+				})
+			}).catch(err => {
+				console.log(err)
+			})
+			// @ts-ignore
+			win.webContents.send("save-copy")
+
 		},
 	  },
 	  { 
@@ -45,7 +99,8 @@ const appMenu = [
 			// @ts-ignore
 			win.webContents.send("save-file")
 		},
-	  }
+	  },
+      isMac ? { role: 'close' } : { role: 'quit' },
 
 
 
@@ -146,6 +201,7 @@ async function createWindow() {
     webPreferences: {
       preload: path.join(__dirname, '../preload/index.cjs'),
     },
+	// titleBarStyle: 'hiddenInset'
   })
 
   if (app.isPackaged) {
@@ -155,7 +211,6 @@ async function createWindow() {
     const url = `http://${pkg.env.HOST || '127.0.0.1'}:${pkg.env.PORT}`
 
     win.loadURL(url)
-    win.webContents.openDevTools()
   }
 }
 
@@ -196,4 +251,5 @@ app.on('activate', () => {
       console.error('Failed check update:', e)
     )
 } */
+
 
