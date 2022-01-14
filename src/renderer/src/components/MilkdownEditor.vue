@@ -70,7 +70,7 @@ const editor = useEditor((root) =>
 .milkdown .editor {
   max-width: none !important;
   height: 100%;
-  padding: 3% 6% !important;
+  padding: 3% 6% 3% 6%;
 }
 
 .editor {
