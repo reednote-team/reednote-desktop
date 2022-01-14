@@ -8,3 +8,5 @@ tmp
 **/.tmp
 release
 .vscode
+.idea
+.nova
