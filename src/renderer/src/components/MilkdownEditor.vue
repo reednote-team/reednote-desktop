@@ -1,4 +1,4 @@
-<script setup lang='ts'>
+<script setup lang="ts">
 import { Editor, rootCtx, defaultValueCtx } from "@milkdown/core";
 import { nord } from "@milkdown/theme-nord";
 import { VueEditor, useEditor } from "@milkdown/vue";
@@ -10,28 +10,30 @@ import { cursor } from "@milkdown/plugin-cursor";
 import { slash } from "@milkdown/plugin-slash";
 import { emoji } from "@milkdown/plugin-emoji";
 import { tooltip } from "@milkdown/plugin-tooltip";
-import { upload } from "@milkdown/plugin-upload"
-import { prism } from "@milkdown/plugin-prism"
-import { indent, indentPlugin } from '@milkdown/plugin-indent';
-import { listener, listenerCtx } from '@milkdown/plugin-listener';
-import { useStore } from 'vuex'
-import { computed } from 'vue'
+import { upload } from "@milkdown/plugin-upload";
+import { prism } from "@milkdown/plugin-prism";
+import { indent, indentPlugin } from "@milkdown/plugin-indent";
+import { listener, listenerCtx } from "@milkdown/plugin-listener";
+import { useStore } from "vuex";
+import { computed } from "vue";
 
-const store = useStore()
+const store = useStore();
 
 const content = computed(() => {
-	return store.state.currentNote.content
-})
+  return store.state.currentNote.content;
+});
 
 const editor = useEditor((root) =>
   Editor.make()
     .config((ctx) => {
-      ctx.set(rootCtx, root)
-      ctx.set(defaultValueCtx, content.value)
+      ctx.set(rootCtx, root);
+      ctx.set(defaultValueCtx, content.value);
       ctx.set(listenerCtx, {
-        markdown: [(get) => {
-			store.commit('updateCurrentNoteContent', get())
-        }]
+        markdown: [
+          (get) => {
+            store.commit("updateCurrentNoteContent", get());
+          },
+        ],
       });
     })
     .use(nord)
@@ -48,9 +50,9 @@ const editor = useEditor((root) =>
     .use(prism)
     .use(
       indent.configure(indentPlugin, {
-        type: 'space',
+        type: "space",
         size: 4,
-      }),
+      })
     )
 );
 </script>
@@ -60,8 +62,6 @@ const editor = useEditor((root) =>
 </template>
 
 <style>
-
-
 .milkdown {
   box-shadow: none;
   height: 500px;
@@ -70,7 +70,7 @@ const editor = useEditor((root) =>
 .milkdown .editor {
   max-width: none !important;
   height: 100%;
-  padding: 3% 6% 3% 6%;
+  padding: 3% 6%;
 }
 
 .editor {
@@ -108,6 +108,4 @@ const editor = useEditor((root) =>
 .milkdown .editor .code-fence {
   @apply bg-gray-50 dark:bg-zinc-900;
 }
-
 </style>
-
